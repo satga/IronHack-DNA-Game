@@ -1,0 +1,46 @@
+.slides {
+  /* background-image: url(images/DNA_strands.jpg); */
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position: center;
+  width:90%;
+}
+
+header {
+  height: 15vh;
+  padding-left: 4vw;
+  padding-top: 1vh;
+  background-image: url(images/DNA_strands.jpg);
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position: center;
+  color: white
+}
+
+.process {
+  word-wrap: normal;
+  margin-top: 5vh;
+}
+
+.enzymes img {
+  width: 44%;
+  display: inline;
+}
+
+.enzymes div {
+  background-color: white;
+  padding: 1vh;
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin: 1vh;
+  margin-top: 5vh;
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 3px #888888;
+}
+
+/* .process li {
+  list-style: none;
+  border: 1px solid blue;
+  border-radius: 2px;
+} */
