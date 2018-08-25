@@ -17,17 +17,36 @@ header {
   color: white
 }
 
-.process {
+#process {
   word-wrap: normal;
-  margin-top: 5vh;
+  margin-top: 3vh;
+  /* margin-left: 1vw; */
 }
 
-.enzymes img {
+#clicks {
+  margin-left: 4vw;
+  margin-right: 4vw;
+  margin-bottom: 3vh;
+  background-color: #888888;
+  border: 1 px solid #888888;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  height: 2.5em;
+  padding: 0.5em;
+  font-size: 1.2em;
+  position: absolute;
+  top: 264px;
+  right: 14px;
+  z-index: 2;
+}
+
+#enzymes img {
   width: 44%;
   display: inline;
 }
 
-.enzymes div {
+#enzymes div {
   background-color: white;
   padding: 1vh;
   border: 1px solid grey;
@@ -39,7 +58,7 @@ header {
   box-shadow: 2px 3px #888888;
 }
 
-/* .process li {
+/* #process li {
   list-style: none;
   border: 1px solid blue;
   border-radius: 2px;

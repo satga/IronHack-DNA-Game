@@ -15,8 +15,9 @@
   <p>Simulating how bacteria copy their DNA</p>
 </header>
 <main class="container-fluid main">
-    <div class="row justify-content-md-center enzymes">
-        <div class="col-2 enz">
+    <p id="clicks">Clicks left: <span>20</span></p>
+    <div class="row justify-content-md-center" id="enzymes">
+        <!-- <div class="col-2 enz">
           <img src="images/DNA_pol_I.png" alt="DNA polymerase 1">
           <p>DNA Polymerase I</p>
         </div>
@@ -35,24 +36,26 @@
         <div class="col-2 enz">
             <img src="images/ligase.png" alt="ligase">
             <p>Ligase</p>
-        </div>
+        </div> -->
     </div>
   <div class="row">
-    <div class="col-3 process list-group">
-        <button type="button" id="unwind" class="list-group-item list-group-item-action">Unwind the DNA helix</button>
+    <div class="col-3 list-group" id="process">
+        <!-- <button type="button" id="unwind" class="list-group-item list-group-item-action">Unwind the DNA helix</button>
         <button type="button" id="addRNA" class="list-group-item list-group-item-action">Add RNA nucleotides</button>
         <button type="button" id="addDNA" class="list-group-item list-group-item-action">Add DNA nucleotides</button>
         <button type="button" id="replaceRNA" class="list-group-item list-group-item-action">Remove & replace RNA nucleotides</button>
-        <button type="button" id="ligate" class="list-group-item list-group-item-action">Connect Okazaki fragments</button>
+        <button type="button" id="ligate" class="list-group-item list-group-item-action">Connect Okazaki fragments</button> -->
     </div> 
     <div class="col-9" id="animation">
     </div>
   </div>
 </main>
-
+<audio id="wrongAnswer">
+    <source src="audio/Cartoon_Boing.mp3" type="audio/mpeg">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script><script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script type="text/javascript" src="game.js"></script>
 <script type="text/javascript" src="brains.js"></script>
 <script type="text/javascript" src="canvas.js"></script>
 </body>
