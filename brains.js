@@ -1,14 +1,13 @@
 var slides = [
+  { name: 'Step0',   img: 'Slide01.png' },
   { name: 'Step1',   img: 'Slide02.png' },
-  { name: 'Step2',   img: 'Slide04.png' },
-  { name: 'Step3',   img: 'Slide06.png' },
-  { name: 'Step4',   img: 'Slide07.png' },
-  { name: 'Step5',   img: 'Slide10.png' },
-  { name: 'Step6',   img: 'Slide11.png' },
-  { name: 'Step7',   img: 'Slide12.png' },
-  { name: 'Step8',   img: 'Slide13.png' },
-  { name: 'Step9',   img: 'Slide14.png' },
-  { name: 'Step10',  img: 'Slide15.png' },
+  { name: 'Step2',   img: 'Slide03.png' },
+  { name: 'Step3',   img: 'Slide04.png' },
+  { name: 'Step4',   img: 'Slide05.png' },
+  { name: 'Step5',   img: 'Slide06.png' },
+  { name: 'Step6',   img: 'Slide07.png' },
+  { name: 'Step7',   img: 'Slide08.png' },
+  { name: 'Step8',   img: 'Slide09.png' },
 ];
 
 var enzymes = [
@@ -28,8 +27,8 @@ var processes = [
 ];
 
 $(document).ready(function(){
-  var pic = 1;
-  console.log(slides[1])
+  var pic = 0;
+  // console.log(slides[1])
   /* <img class="enz" src="images/ligase.png" alt="ligase"> */
   var htmlToInsert = '<img class="slides" src="images/DNAanimation/'+ slides[pic].img +'">';
   // Add all the div's to the HTML
@@ -41,26 +40,60 @@ $(document).ready(function(){
   var processClass = new Processes(processes);  
   processClass.loadProcesses();
 
+  var theGame = new Game()
+  var selectedEnzyme;
+  var thisBtn;
+
 $('.enz').click(function () {
-  console.log(this);
-  var x = document.getElementById("wrongAnswer"); 
-    x.play(); 
+  $(this).addClass("pressed");
+  $('#enzymes').addClass("blocked");
+  selectedEnzyme =$(this);
+  if (theGame.checkEnzymeOrder($(this).attr('name'))) {
+    if (($('#process').hasClass("blocked"))) {
+      theGame.gotOneMatch(selectedEnzyme, thisBtn);
+    } else {alert('Good Job! Now pick a process to match')}
+  } else {
+      theGame.updateClicks();
+      if (($('#process').hasClass("blocked"))) {
+        alert('Try selecting a different enzyme to match your process!')
+        selectedEnzyme.removeClass("pressed");
+        $('#enzymes').removeClass("blocked");
+      } else {
+        alert('Try selecting a different enzyme or process!')
+        $('#enzymes').removeClass("blocked");
+        selectedEnzyme.removeClass("pressed");
+      }
+  }
+
 });
 
-$('.process').click(function () {
-  console.log(this);
+$('.process-item').click(function (e) {
+  $(this).addClass("pressed");
+  $('#process').addClass("blocked");
+  thisBtn = $(this);
+  if (theGame.checkProcessOrder(thisBtn.attr('name'))) {
+    if (($('#enzymes').hasClass("blocked"))) {
+      theGame.gotOneMatch(selectedEnzyme, thisBtn);
+    } else {alert('Good Job! Now pick an enzyme to match')}
+  } else {
+      theGame.updateClicks();
+      if (($('#enzymes').hasClass("blocked"))) {
+        alert('Try selecting a different process to match your enzyme!')
+        thisBtn.removeClass("pressed");
+        $('#process').removeClass("blocked");
+      } else {
+        alert('Try selecting a different enzyme or process!')
+        $('#process').removeClass("blocked");
+        thisBtn.removeClass("pressed");
+      }
+    }
 });
 }) // end of document ready load function
-
-
 
 /* class game
  -function to check if clicked enzyme is in correct order
  -function to check if process is correct 
  -function to change the background image
  -function to keep track of points
- -function to suffle order of enzymes
- -function to suffle order of processes
- -make sound for incorrect choice
  -say the enzyme's name when hovering
 */

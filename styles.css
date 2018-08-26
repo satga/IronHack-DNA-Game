@@ -1,3 +1,9 @@
+/* 
+button border grey: rgba(0,0,0,.125);
+button text color: #495057;
+disabled text color: color: #6c757d; */
+
+
 .slides {
   /* background-image: url(images/DNA_strands.jpg); */
   background-repeat:no-repeat;
@@ -20,8 +26,60 @@ header {
 #process {
   word-wrap: normal;
   margin-top: 3vh;
-  /* margin-left: 1vw; */
+  padding-left: 1vw;
 }
+
+.process-item {
+  background-color: white;
+  padding: 1vh;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 5px;
+  box-shadow: 2px 3px #888888;
+  color: #495057;
+}
+
+#enzymes img {
+  width: 44%;
+  display: inline;
+}
+.enz  {
+  background-color: white;
+  color: #495057;
+  padding: 1vh;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 25px;
+  margin: 1vh;
+  margin-top: 5vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 2px 3px #888888;
+}
+
+#enzymes .pressed {
+  box-shadow: none;
+  border: 5px solid #007bff;;
+}
+
+#process .pressed {
+  box-shadow: none;
+  border: none;
+  background-color: #007bff;
+  color: white;
+}
+
+.blocked {
+  pointer-events: none;
+}
+
+/* .disabled {
+  pointer-events: none;
+  color: #6c757d;
+  box-shadow: none;
+  border: 1px solid rgba(0,0,0,.125);
+} */
 
 #clicks {
   margin-left: 4vw;
@@ -40,26 +98,3 @@ header {
   right: 14px;
   z-index: 2;
 }
-
-#enzymes img {
-  width: 44%;
-  display: inline;
-}
-
-#enzymes div {
-  background-color: white;
-  padding: 1vh;
-  border: 1px solid grey;
-  border-radius: 5px;
-  margin: 1vh;
-  margin-top: 5vh;
-  display: flex;
-  align-items: center;
-  box-shadow: 2px 3px #888888;
-}
-
-/* #process li {
-  list-style: none;
-  border: 1px solid blue;
-  border-radius: 2px;
-} */

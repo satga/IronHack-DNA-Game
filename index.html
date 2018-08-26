@@ -15,36 +15,11 @@
   <p>Simulating how bacteria copy their DNA</p>
 </header>
 <main class="container-fluid main">
-    <p id="clicks">Clicks left: <span>20</span></p>
+    <p id="clicks">Missed clicks: <span>0</span></p>
     <div class="row justify-content-md-center" id="enzymes">
-        <!-- <div class="col-2 enz">
-          <img src="images/DNA_pol_I.png" alt="DNA polymerase 1">
-          <p>DNA Polymerase I</p>
-        </div>
-        <div class="col-2 enz">
-          <img src="images/DNA_pol_III.jpg" alt="DNA polymerase 3">
-          <p>DNA Polymerase III</p>
-          </div>
-        <div class="col-2 enz">
-          <img src="images/helicase.png" alt="helicase">
-          <p>Helicase</p>
-        </div>
-        <div class="col-2 enz">
-          <img src="images/primase.png" alt="primase">
-          <p>Primase</p>
-        </div>
-        <div class="col-2 enz">
-            <img src="images/ligase.png" alt="ligase">
-            <p>Ligase</p>
-        </div> -->
     </div>
   <div class="row">
     <div class="col-3 list-group" id="process">
-        <!-- <button type="button" id="unwind" class="list-group-item list-group-item-action">Unwind the DNA helix</button>
-        <button type="button" id="addRNA" class="list-group-item list-group-item-action">Add RNA nucleotides</button>
-        <button type="button" id="addDNA" class="list-group-item list-group-item-action">Add DNA nucleotides</button>
-        <button type="button" id="replaceRNA" class="list-group-item list-group-item-action">Remove & replace RNA nucleotides</button>
-        <button type="button" id="ligate" class="list-group-item list-group-item-action">Connect Okazaki fragments</button> -->
     </div> 
     <div class="col-9" id="animation">
     </div>
@@ -52,6 +27,8 @@
 </main>
 <audio id="wrongAnswer">
     <source src="audio/Cartoon_Boing.mp3" type="audio/mpeg">
+<audio id="correctAnswer">
+    <source src="audio/correct_sound.m4a" type="audio/mpeg">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script><script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
