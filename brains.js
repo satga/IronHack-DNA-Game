@@ -94,7 +94,5 @@ $(document).ready(function(){
 
 /* class game
  -change Alerts to Modal 
- -function to indicate % accuracy
- -alert to try again and reload game
  -ANIMATION!
 */
