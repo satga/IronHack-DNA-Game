@@ -1,7 +1,11 @@
 /* 
 button border grey: rgba(0,0,0,.125);
 button text color: #495057;
-disabled text color: color: #6c757d; */
+disabled text color: color: #6c757d;
+  background-color: #888888;
+  border: 1 px solid #888888;
+  border-radius: 5px;
+   */
 
 
 .slides {
@@ -47,9 +51,9 @@ header {
   color: #495057;
   padding: 1vh;
   border: 1px solid rgba(0,0,0,.125);
-  border-radius: 25px;
+  border-radius: 6%;
   margin: 1vh;
-  margin-top: 5vh;
+  margin-top: 2vh;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -85,16 +89,55 @@ header {
   margin-left: 4vw;
   margin-right: 4vw;
   margin-bottom: 3vh;
-  background-color: #888888;
-  border: 1 px solid #888888;
-  border-radius: 5px;
-  color: white;
+  border: 1px solid transparent;
+  border-radius: .25rem;
   text-align: center;
   height: 2.5em;
   padding: 0.5em;
   font-size: 1.2em;
-  position: absolute;
-  top: 264px;
-  right: 14px;
+  position: fixed;
+  bottom: 5vh;
+  right: -1vw;
   z-index: 2;
+}
+
+.normal {
+  color: #fff;
+  background-color: #1e7e34;
+  border-color: #1c7430;
+}
+.warning {
+  color: #212529;
+  background-color: #d39e00;
+  border-color: #c69500;
+}
+ .instructions-header {
+  height: 40vh;
+  padding-left: 10vw;
+  padding-top: 10vh;
+  background-image: url(images/DNA_strands.jpg);
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position: center;
+  color: white
+ }
+
+ .instructions h2 {
+   padding-top: 3vh;
+   padding-bottom: 3vh;
+   padding-left: 10vw;
+ }
+
+ .instructions ol {
+  padding-top: 3vh;
+  padding-left: 10vw;
+}
+
+.instructions a {
+  box-shadow: none;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  margin-left: 40vw;
+  margin-top: 5vh;
 }

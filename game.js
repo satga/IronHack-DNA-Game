@@ -53,14 +53,14 @@ class Processes{
 
 class Game{
   constructor(){
-    this.correctOrder =['Step1', 'Step2', 'Step3', 'Step4', 'Step5',];
+    this.correctOrder =['helicase', 'primase', 'DNA polymerase 3', 'helicase', 'primase', 'DNA polymerase 3', 'DNA polymerase 1', 'ligase',];
     this.guessedSteps=0;
     this.missedClicks=0;
     this.wrongSound = document.getElementById("wrongAnswer"); 
     this.rightSound = document.getElementById("correctAnswer"); 
   }
   checkEnzymeOrder(enzymePick) {
-    if (this.guessedSteps == enzymePick.split('Step')[1]-1 ) {
+    if (this.correctOrder[this.guessedSteps] == enzymePick ) {
       console.log('enzyme match')
       this.rightSound.play()
       return true
@@ -71,7 +71,7 @@ class Game{
   }
 
   checkProcessOrder(processPick) {
-    if (this.guessedSteps == processPick.split('Step')[1]-1 ) {
+    if (this.correctOrder[this.guessedSteps] == processPick) {
       this.rightSound.play()
       console.log('process match')
       return true
@@ -82,33 +82,53 @@ class Game{
   }  
 
   updateClicks() {
-      var displayClicks = $('span');
-      displayClicks.html(this.missedClicks)
+    var displayClicks = $('span');
+    var maxClicks=2*this.correctOrder.length;
+    var totalClicks = this.missedClicks + this.guessedSteps*2;
+    displayClicks.html(`${totalClicks} out of ${maxClicks}`)
+    if (this.missedClicks > 0.3*(maxClicks)) {
+      $('#clicks').removeClass("normal");
+      $('#clicks').addClass("warning");
     }
-
-    gotOneMatch(pickedEnzyme, pickedProcess){
-      alert('Congratulations, you got a match!')
-      pickedProcess.removeClass("pressed");
-      // pickedProcess.addClass("disabled");
-      pickedEnzyme.removeClass("pressed");
-      // pickedEnzyme.addClass("disabled");
-      $('#process').removeClass("blocked");
-      $('#enzymes').removeClass("blocked");
-      this.guessedSteps++;
-      this.updateSlides();
-      this.checkIfWon();
-    }
-
-    updateSlides() {
-      var htmlToInsert = '<img class="slides" src="images/DNAanimation/'+ slides[this.guessedSteps].img +'">';
-      $('#animation').html(htmlToInsert);
-    }
-
-    checkIfWon() {
-      if (this.guessedSteps == this.correctOrder.length) {
-        alert('Congratulations! You won the game!')
-        // report accuracy
-      }
-    }
-
   }
+
+  gotOneMatch(pickedEnzyme, pickedProcess){
+    // alert('Congratulations, you got a match!')
+    pickedProcess.removeClass("pressed");
+    // pickedProcess.addClass("disabled");
+    pickedEnzyme.removeClass("pressed");
+    // pickedEnzyme.addClass("disabled");
+    $('#process').removeClass("blocked");
+    $('#enzymes').removeClass("blocked");
+    this.guessedSteps++;
+    this.updateSlides();
+    this.checkIfWon();
+    this.narrateProcess ()
+  }
+
+  updateSlides() {
+    var htmlToInsert = '<img class="slides" src="images/DNAanimation/'+ slides[this.guessedSteps].img +'">';
+    $('#animation').html(htmlToInsert);
+  }
+
+  narrateProcess () {
+    if ('speechSynthesis' in window) {
+      var msg = new SpeechSynthesisUtterance(slides[this.guessedSteps].description);
+      window.speechSynthesis.speak(msg);
+    }
+  }
+
+  checkIfWon() {
+    if (this.guessedSteps == this.correctOrder.length) {
+        if (this.missedClicks == 0) {
+          alert('Congratulations! \nYou won the game with the minimum number of steps!')
+        } else if (this.missedClicks < 0.2*this.correctOrder.length) {
+          alert(`Congratulations, you won the game with only ${this.missedClicks} misses. \nTry again so you can get closer to the minimum number of steps!`)
+        } else {
+          alert(`You finished the game with ${this.missedClicks} misses. \nTry again so you can get closer to the minimum number of steps!`)
+        }
+        location.reload();// reload window
+    }
+  }
+
+} // end of Game class
