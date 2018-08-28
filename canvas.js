@@ -4,78 +4,125 @@ var thymine;
 var guanine;
 
 window.onload = () => {
-var adenine1 = new AdenineUp(100,100);
-var adenine2 = new AdenineUp(158,100);
-  // drawAdenine();
-  drawThymine()
-  // adenine.draw();
-  thymine.draw();
-
+  let basesUp = new BaseUp("images/AdenineUp.png","images/ThymineUp.png","images/cytosineUp.png","images/GuanineUp.png");
+  let basesDown = new BaseDown("images/AdenineDown.png","images/ThymineDown.png","images/cytosineDown.png","images/GuanineDown.png");
+  // var adenine2 = new BaseUp(158,100);
+  // basesUp.drawGuanine (100,100);
+  let arrayOfBases = basesUp.drawRandomStrand(100,100, 10);
+  // basesUp.drawComplementaryStrand(100, 100,arrayOfBases);
+  basesDown.drawComplementaryStrand(99, 190,arrayOfBases);
+  // 
 }; // end of onload function
 
+// make a class for basesUp, another for basesDown, basesRight, basesLeft, randomize one but keep a dummy variable to keep track. 
+// make strands of random length and random orientation and ask to identify 3' or 5' end
+// level 1, one of the ends is already marked for 3' of 5' in single strands
+// level 2, none of the ends are marked in single strand
+// level 3, one of the ends is marked in a double strand
+// level 4, none of the ends are marked in a double strand
 var ctx = document.getElementById('canv').getContext('2d');
 
-class AdenineUp {
-  constructor(x,y){
-    this.x= x;
-    this.y= y;
+class BaseUp {
+  constructor(adenineSource,thymineSource,cytosineSource,guanineSource){
+    // this.x= x;
+    // y= y;
     // this.rotation = rotation;
     this.width= 60;
     this.height= 90;
-    this.imageSource= "images/AdenineUp.png";
-    this.drawAdenineUp ();
+    this.bases = ['A', 'T', 'G', 'C'];
+    this.adenineSource= adenineSource;
+    this.thymineSource=thymineSource;
+    this.cytosineSource=cytosineSource;
+    this.guanineSource=guanineSource;
+    // this.drawAdenineUp ();
   };
-    drawAdenineUp () {
+    drawAdenine (x,y) {
       var adenineImage = new Image();
-      adenineImage.src = this.imageSource;
+      adenineImage.src = this.adenineSource
       adenineImage.onload = ()=>{
-        // if (this.rotation) {
-        //   ctx.rotate(20*Math.PI/180);
-        // }
-      ctx.drawImage(adenineImage, this.x, this.y, this.width, this.height)
+      ctx.drawImage(adenineImage, x, y, this.width, this.height)
     }
+  }
+  drawThymine (x,y) {
+    var thymineImage = new Image();
+    thymineImage.src = this.thymineSource;
+    thymineImage.onload = ()=>{
+    ctx.drawImage(thymineImage, x, y, this.width, this.height)
+    }
+  }
+
+  drawGuanine (x,y) {
+    var guanineImage = new Image();
+    guanineImage.src = this.guanineSource;
+    guanineImage.onload = ()=>{
+    ctx.drawImage(guanineImage, x, y, this.width, this.height)
+    }
+  }
+
+  drawCytosine (x,y) {
+    var cytosineImage = new Image();
+    cytosineImage.src = this.cytosineSource;
+    cytosineImage.onload = ()=>{
+    ctx.drawImage(cytosineImage, x, y, this.width, this.height)
+    }
+  }
+
+  drawComplementaryStrand(x,y,baseArray) {
+    baseArray.forEach(base => {
+      switch (base) {
+        case 'A':
+          this.drawThymine (x,y) 
+          break;
+        case 'T':
+          this.drawAdenine (x,y) 
+          break;
+        case 'C':
+          this.drawGuanine (x,y) 
+          break;
+        case 'G':
+          this.drawCytosine (x,y) 
+          break;
+        default:
+          break;
+      }
+      x += this.width-2;
+    });
+  }
+
+  drawRandomStrand(x,y, length) {
+    let newBaseArray = [];
+    for (let i = 0; i < length; i++) {
+      let thisBase = this.bases[Math.floor(Math.random()*4)];
+      switch (thisBase) {
+        case 'A':
+          this.drawAdenine (x,y) 
+          break;
+        case 'T':
+          this.drawThymine (x,y) 
+          break;
+        case 'C':
+          this.drawCytosine (x,y) 
+          break;
+        case 'G':
+          this.drawGuanine (x,y) 
+          break;
+        default:
+          break;
+      } 
+      x += this.width-2;
+      newBaseArray.push(thisBase)
+      
+    } return newBaseArray;
+  }
+
+} // end of baseUp class
+
+class BaseDown extends BaseUp{
+  constructor(adenineSource,thymineSource,cytosineSource,guanineSource){
+    super(adenineSource,thymineSource,cytosineSource,guanineSource)
   }
 }
 
-  // function drawAdenine() {
-  //   adenine = {
-  //     x: 100,
-  //     y: 100,
-  //     width: 90,
-  //     height: 60,
-  //     imageSource: "images/Adenine.png"
-  //   }
-  //   adenine.draw = function()  {
-  //     console.log(this)
-
-  //     var adenineImage = new Image();
-  //     adenineImage.src = this.imageSource;
-  //     adenineImage.onload = ()=>{
-  //       // ctx.rotate(90*Math.PI/180);
-  //       ctx.drawImage(adenineImage, this.x, this.y, this.width, this.height)
-  //     }
-  //   }
-  // }
-
-  function drawThymine() {
-    thymine = {
-      x: 160,
-      y: 260,
-      width: 90,
-      height: 60,
-      imageSource: "images/Thymine.png"
-    }
-    thymine.draw = function()  {
-      console.log(this)
-
-      var thymineImage = new Image();
-      thymineImage.src = this.imageSource;
-      thymineImage.onload = ()=>{
-        // ctx.rotate(20*Math.PI/180);
-        ctx.drawImage(thymineImage, this.x, this.y, this.width, this.height)
-      }
-    }
-  }
 
 
 // class Replication{
