@@ -57,11 +57,13 @@ $(document).ready(function(){
     } else {
         theGame.updateClicks();
         if (($('#process').hasClass("blocked"))) {
-          alert('Try selecting a different enzyme to match your process!')
+          popAlert($('#popAlert'),'Try selecting a different enzyme to match your process')
+          // alert('Try selecting a different enzyme to match your process!')
           selectedEnzyme.removeClass("pressed");
           $('#enzymes').removeClass("blocked");
         } else {
-          alert('Try selecting a different enzyme or process!')
+          popAlert($('#popAlert'),'Try selecting a different enzyme or process!')
+          // alert('Try selecting a different enzyme or process!')
           $('#enzymes').removeClass("blocked");
           selectedEnzyme.removeClass("pressed");
         }
@@ -80,11 +82,12 @@ $(document).ready(function(){
     } else {
         theGame.updateClicks();
         if (($('#enzymes').hasClass("blocked"))) {
-          alert('Try selecting a different process to match your enzyme!')
+          popAlert($('#popAlert'),'Try selecting a different process to match your enzyme!')
           thisBtn.removeClass("pressed");
           $('#process').removeClass("blocked");
         } else {
-          alert('Try selecting a different enzyme or process!')
+          popAlert($('#popAlert'),'Try selecting a different enzyme or process!')
+          // alert('Try selecting a different enzyme or process!')
           $('#process').removeClass("blocked");
           thisBtn.removeClass("pressed");
         }
@@ -93,6 +96,13 @@ $(document).ready(function(){
 }) // end of document ready load function
 
 /* class game
- -change Alerts to Modal 
  -ANIMATION!
 */
+
+function popAlert(element,text) {
+  element.html(text);
+  element.show();
+  setTimeout(function(){
+    element.hide();
+    }, 1500);
+}

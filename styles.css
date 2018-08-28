@@ -142,16 +142,17 @@ header {
   margin-top: 5vh;
 }
 
-canvas {
+/* canvas {
   border: 1px solid rebeccapurple;
   margin-left: 2vw;
-}
+} */
 
 .hide {
   display: none;
 }
 
 .info {
+  display: none;
   position: fixed;
   bottom: 40vh;
   right: 33vw;
@@ -164,4 +165,19 @@ canvas {
   text-align: center;
   border: 1px solid #888888;
   border-radius: 4px;
+}
+
+#score {
+  position: fixed;
+  bottom: -1vh;
+  right: 1vw;
+  height: 13vh;
+  width: 25vw;
+  padding: 2vh;
+  z-index: 2;
+  background-color: #888888;
+  color: #fff;
+  text-align: center;
+  border: 1px solid #888888;
+  border-radius: 4px; 
 }
