@@ -133,7 +133,7 @@ header {
   padding-left: 10vw;
 }
 
-.instructions a {
+.instructions a, #startGame {
   box-shadow: none;
   border: none;
   background-color: #007bff;
@@ -145,4 +145,23 @@ header {
 canvas {
   border: 1px solid rebeccapurple;
   margin-left: 2vw;
+}
+
+.hide {
+  display: none;
+}
+
+.info {
+  position: fixed;
+  bottom: 40vh;
+  right: 33vw;
+  height: 13vh;
+  width: 35vw;
+  padding: 2vh;
+  z-index: 2;
+  background-color: #888888;
+  color: #fff;
+  text-align: center;
+  border: 1px solid #888888;
+  border-radius: 4px;
 }

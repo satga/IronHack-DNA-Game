@@ -1,18 +1,14 @@
-var adenine;
-var cytosine;
-var thymine;
-var guanine;
 
-window.onload = () => {
-  let basesUp = new BaseUp("images/AdenineUp.png","images/ThymineUp.png","images/cytosineUp.png","images/GuanineUp.png");
-  let basesDown = new BaseDown("images/AdenineDown.png","images/ThymineDown.png","images/cytosineDown.png","images/GuanineDown.png");
-  // var adenine2 = new BaseUp(158,100);
-  // basesUp.drawGuanine (100,100);
-  let arrayOfBases = basesUp.drawRandomStrand(100,100, 10);
-  // basesUp.drawComplementaryStrand(100, 100,arrayOfBases);
-  basesDown.drawComplementaryStrand(99, 190,arrayOfBases);
-  // 
-}; // end of onload function
+// window.onload = () => {
+//   // let basesUp = new BaseUp("images/AdenineUp.png","images/ThymineUp.png","images/cytosineUp.png","images/GuanineUp.png");
+//   // let basesDown = new BaseDown("images/AdenineDown.png","images/ThymineDown.png","images/cytosineDown.png","images/GuanineDown.png");
+//   let basesLeft = new BaseLeft("images/Adenine.png","images/Thymine.png","images/cytosine.png","images/Guanine.png");
+//   let basesRight = new BaseRight("images/AdenineRight.png","images/ThymineRight.png","images/cytosineRight.png","images/GuanineRight.png");
+//   let arrayOfBases = basesLeft.drawRandomStrand(100,100, 10);
+//   // basesUp.drawComplementaryStrand(100, 100,arrayOfBases);
+//   basesRight.drawComplementaryStrand(190, 99,arrayOfBases);
+//   // 
+// }; // end of onload function
 
 // make a class for basesUp, another for basesDown, basesRight, basesLeft, randomize one but keep a dummy variable to keep track. 
 // make strands of random length and random orientation and ask to identify 3' or 5' end
@@ -20,13 +16,11 @@ window.onload = () => {
 // level 2, none of the ends are marked in single strand
 // level 3, one of the ends is marked in a double strand
 // level 4, none of the ends are marked in a double strand
-var ctx = document.getElementById('canv').getContext('2d');
+// var ctx = document.getElementById('canv').getContext('2d');
 
 class BaseUp {
   constructor(adenineSource,thymineSource,cytosineSource,guanineSource){
-    // this.x= x;
-    // y= y;
-    // this.rotation = rotation;
+    this.ctx = document.getElementById('canv').getContext('2d');
     this.width= 60;
     this.height= 90;
     this.bases = ['A', 'T', 'G', 'C'];
@@ -40,14 +34,14 @@ class BaseUp {
       var adenineImage = new Image();
       adenineImage.src = this.adenineSource
       adenineImage.onload = ()=>{
-      ctx.drawImage(adenineImage, x, y, this.width, this.height)
+      this.ctx.drawImage(adenineImage, x, y, this.width, this.height)
     }
   }
   drawThymine (x,y) {
     var thymineImage = new Image();
     thymineImage.src = this.thymineSource;
     thymineImage.onload = ()=>{
-    ctx.drawImage(thymineImage, x, y, this.width, this.height)
+    this.ctx.drawImage(thymineImage, x, y, this.width, this.height)
     }
   }
 
@@ -55,7 +49,7 @@ class BaseUp {
     var guanineImage = new Image();
     guanineImage.src = this.guanineSource;
     guanineImage.onload = ()=>{
-    ctx.drawImage(guanineImage, x, y, this.width, this.height)
+    this.ctx.drawImage(guanineImage, x, y, this.width, this.height)
     }
   }
 
@@ -63,7 +57,7 @@ class BaseUp {
     var cytosineImage = new Image();
     cytosineImage.src = this.cytosineSource;
     cytosineImage.onload = ()=>{
-    ctx.drawImage(cytosineImage, x, y, this.width, this.height)
+    this.ctx.drawImage(cytosineImage, x, y, this.width, this.height)
     }
   }
 
@@ -111,7 +105,7 @@ class BaseUp {
       } 
       x += this.width-2;
       newBaseArray.push(thisBase)
-      
+
     } return newBaseArray;
   }
 
@@ -123,6 +117,65 @@ class BaseDown extends BaseUp{
   }
 }
 
+class BaseLeft extends BaseUp{
+  constructor(adenineSource,thymineSource,cytosineSource,guanineSource){
+    super(adenineSource,thymineSource,cytosineSource,guanineSource)
+    this.width= 90;
+    this.height= 60;
+  }
+  drawComplementaryStrand(x,y,baseArray) {
+    baseArray.forEach(base => {
+      switch (base) {
+        case 'A':
+          this.drawThymine (x,y) 
+          break;
+        case 'T':
+          this.drawAdenine (x,y) 
+          break;
+        case 'C':
+          this.drawGuanine (x,y) 
+          break;
+        case 'G':
+          this.drawCytosine (x,y) 
+          break;
+        default:
+          break;
+      }
+      y += this.height-2;
+    });
+  }
+  drawRandomStrand(x,y, length) {
+    let newBaseArray = [];
+    for (let i = 0; i < length; i++) {
+      let thisBase = this.bases[Math.floor(Math.random()*4)];
+      switch (thisBase) {
+        case 'A':
+          this.drawAdenine (x,y) 
+          break;
+        case 'T':
+          this.drawThymine (x,y) 
+          break;
+        case 'C':
+          this.drawCytosine (x,y) 
+          break;
+        case 'G':
+          this.drawGuanine (x,y) 
+          break;
+        default:
+          break;
+      } 
+      y += this.height-2;
+      newBaseArray.push(thisBase)
+
+    } return newBaseArray;
+  }
+}
+
+class BaseRight extends BaseLeft{
+  constructor(adenineSource,thymineSource,cytosineSource,guanineSource){
+    super(adenineSource,thymineSource,cytosineSource,guanineSource)
+  }
+}
 
 
 // class Replication{
