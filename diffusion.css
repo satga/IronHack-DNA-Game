@@ -1,0 +1,64 @@
+header {
+  height: 12vh;
+  padding-left: 4vw;
+  padding-top: 2vh;
+  background-color:#adb4cc;
+  color: white;
+}
+
+.instructions {
+  background-color: #adb4cc;
+  color: white;
+  height: 12vh;
+  padding-left: 4vw;
+  /* padding-top: 2vh; */
+}
+.info {
+  display: none;
+  position: fixed;
+  bottom: 40vh;
+  right: 33vw;
+  height: 13vh;
+  width: 35vw;
+  padding: 2vh;
+  z-index: 2;
+  background-color: #017467;
+  color: #fff;
+  text-align: center;
+  border: 1px solid #017467;
+  border-radius: 4px;
+}
+
+#score {
+  position: fixed;
+  bottom: -1vh;
+  right: 1vw;
+  height: 13vh;
+  width: 25vw;
+  padding: 2vh;
+  z-index: 2;
+  background-color: #017467;
+  color: #fff;
+  text-align: center;
+  border: 1px solid #017467;
+  border-radius: 4px; 
+}
+
+#playGame {
+  box-shadow: none;
+  border: none;
+  background-color: #fc5f09;
+  color: white;
+  margin-left: 40vw;
+  margin-top: 5vh;
+}
+
+canvas {
+  /* border: 1px solid rebeccapurple; */
+  margin-left: 2vw;
+  margin-top: 2vh;
+}
+
+.hide {
+  display: none;
+}

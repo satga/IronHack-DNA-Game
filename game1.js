@@ -51,8 +51,6 @@ class structureGame {
 
   drawStrands () {
     // ctx.clearRect(0,0,canvas.width, canvas.height);
-    this.circle = new Circle(this.setup.circleX,this.setup.circleY);
-    this.circle.drawCircle();
     if (this.setup.position === 'vertical') {
       let arrayOfBases = basesLeft.drawRandomStrand(400,50, 8); // vertical
       basesRight.drawComplementaryStrand(490, 54,arrayOfBases); // vertical
@@ -64,8 +62,13 @@ class structureGame {
     if (this.level <2) {
       this.drawText(this.setup.textX,this.setup.textY,`${this.setup.end} ' end`);
     }
-    // this.circle.updateCanvas();
-    // window.requestAnimationFrame(this.circle.updateCanvas);
+    // this.circle = new Circle(this.setup.circleX,this.setup.circleY);
+    // this.drawCircle();
+    this.drawText(this.setup.circleX,this.setup.circleY, '?')
+    // animate(this.setup.circleX,this.setup.circleY);
+    // this.circle.animateCircle();
+    // this.drawCircle(this.setup.circleX,this.setup.circleY);
+    // window.requestAnimationFrame(this.drawCircle.updateCanvas);
   } 
 
   drawText(x,y,text){
@@ -105,17 +108,21 @@ class structureGame {
     }
   };
   // drawCircle(x,y) {
+  //   // window.cancelAnimationFrame(updateCanvas)
   //   ctx.beginPath();
   //   let radius = 20;
   //   ctx.fillStyle = "#FF0000";
   //   ctx.arc(x,y,radius,0,2*Math.PI);
   //   ctx.fill();
   //   ctx.closePath();
-  //   let hue =0;
-  //     function shiftHue(hue) {
-  //       return (hue+1)%360
-  //     };
+  // }
+    // let hue =0;
+    // updateCanvas();
+    //   function shiftHue(hue) {
+    //     return (hue+1)%360
+    //   };
   //     function updateCanvas(){
+  //       // window.cancelAnimationFrame(updateCanvas)
   //       hue = shiftHue(hue);
   //       var color = "hsl("+hue+",100%,50%)"
   //       //console.log(color)
@@ -125,56 +132,70 @@ class structureGame {
   //       ctx.arc(x,y,radius,0,2*Math.PI);
   //       ctx.fill();
   //       ctx.closePath();
-  //       // window.requestAnimationFrame(updateCanvas);
+  //       window.requestAnimationFrame(updateCanvas);
   //     }
-  //     // window.requestAnimationFrame(updateCanvas);
+  //     window.requestAnimationFrame(updateCanvas);
   //   }
 } // end of structureGame
 
-class Circle {
-  constructor(x,y){
-    this.x = x;
-    this.y = y;
-    this.hue = 0;
-    this.radius = 20;
-  } 
-  drawCircle() {
-    ctx.beginPath();
-    console.log("drawing circle", this)
+// class Circle {
+//   constructor(x,y){
+//     this.x = x;
+//     this.y = y;
+//     // this.hue = 0;
+//     this.radius = 20;
+//   } 
+//   drawCircle() {
+//     ctx.beginPath();
+//     console.log("drawing circle", this)
     
-    ctx.fillStyle = "#FF0000";
-    ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
-    ctx.fill();
-    ctx.closePath();
-    this.updateCanvas();
-    window.requestAnimationFrame(this.updateCanvas);
-  }
+//     ctx.fillStyle = "#FF0000";
+//     ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+//     ctx.fill();
+//     ctx.closePath();
+//     // this.updateCanvas();
+//     // window.requestAnimationFrame(this.updateCanvas);
+//   }
   
-  shiftHue(hue) {
-    return (hue+1)%360
-  };
+  // shiftHue(hue) {
+  //   return (hue+1)%360
+  // };
+  // animateCircle() {
+  //   updateCanvas(this.x,this.y,this.radius);
+  //   function 
+  // updateCanvas(x,y, radius){
+  //       let hue = 0;
+  //       hue = (hue+1)%360//this.shiftHue(this.hue);
+  //       var color = "hsl("+hue+",100%,50%)"
+  //       ctx.clearRect(x,y,2*radius,2*radius);
+  //       ctx.beginPath();
+  //       ctx.fillStyle = color;
+  //       ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+  //       ctx.fill();
+  //       ctx.closePath();
+  //       // window.requestAnimationFrame(updateCanvas);
+  //     }
+      // window.requestAnimationFrame(updateCanvas);
+  // }
+// }
 
-  updateCanvas(){
-    this.hue = this.shiftHue(this.hue);
-    var color = "hsl("+this.hue+",100%,50%)"
-    //console.log(color)
-    // ctx.clearRect(this.x-radius,this.y-radius,2*radius,2*radius);
-    ctx.beginPath();
-    ctx.fillStyle = color;
-    ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
-    ctx.fill();
-    ctx.closePath();
-    window.requestAnimationFrame(this.updateCanvas);
-  }
-    // window.requestAnimationFrame(updateCanvas);
-}
-
-// function animate(){
-//   // setInterval(()=>{
-//     ctx.clearRect(0,0,canvas.width, canvas.height);
-//     // strandGame.drawStrands();
-//     if(frames % 100 === 0)strandGame.circle.upda();
+// function animate(x,y){
+//   setInterval(()=>{
+//     updateCanvas(x,y)
 //     frames++;
-//   // },50)
-//   window.requestAnimationFrame(animate);
+//   },50)
+//   // window.requestAnimationFrame(animate);
+// }
+// function updateCanvas(x,y){
+//   let hue = 0;
+//   let radius=20;
+//   hue = (hue+1)%360//this.shiftHue(this.hue);
+//   var color = "hsl("+hue+",100%,50%)"
+//   ctx.clearRect(x,y,2*radius,2*radius);
+//   ctx.beginPath();
+//   ctx.fillStyle = color;
+//   ctx.arc(x,y,radius,0,2*Math.PI);
+//   ctx.fill();
+//   ctx.closePath();
+//   // window.requestAnimationFrame(updateCanvas);
 // }

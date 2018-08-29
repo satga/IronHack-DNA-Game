@@ -160,10 +160,10 @@ header {
   width: 35vw;
   padding: 2vh;
   z-index: 2;
-  background-color: #888888;
+  background-color: #007bff;;
   color: #fff;
   text-align: center;
-  border: 1px solid #888888;
+  border: 1px solid #007bff;;
   border-radius: 4px;
 }
 
@@ -175,9 +175,9 @@ header {
   width: 25vw;
   padding: 2vh;
   z-index: 2;
-  background-color: #888888;
+  background-color: #1e7e34;
   color: #fff;
   text-align: center;
-  border: 1px solid #888888;
+  border: 1px solid #1e7e34;
   border-radius: 4px; 
 }
