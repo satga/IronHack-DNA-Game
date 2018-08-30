@@ -123,13 +123,14 @@ class structureGame {
           setTimeout(function(){
             $('#popUp').hide();
             }, 2000);
+            break;
         case 4:
         console.log('check if level 4 won')
           $('#popUp').html("Great job!: \n You understand the location of the 3' and 5' ends");
           $('#popUp').show();
           setTimeout(function(){
             $('#popUp').hide();
-            // location.reload();
+            location.reload();
             }, 2000);
           break;
         default:

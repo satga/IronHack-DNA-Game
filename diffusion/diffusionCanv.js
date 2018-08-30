@@ -8,8 +8,8 @@ class Game {
     this.waterMolecules = [];
     this.saltMolecules=[];
     this.waterLevel = new Water(this.waterLevelLeft,this.waterLevelRight);
-    this.spawnWaterMoleculesLeft(10)
-    this.spawnWaterMoleculesRight(10)
+    this.spawnWaterMoleculesLeft(12)
+    this.spawnWaterMoleculesRight(12)
     this.lineArray = this.pores.lineArray;
     this.allMolecules= this.waterMolecules.concat(this.saltMolecules);
   }
@@ -31,6 +31,9 @@ class Game {
     this.waterLevel.drawRight()
     this.pores.drawPores()
     this.waterMolecules.forEach((oneMol)=>{
+      oneMol.draw();
+    })
+    this.saltMolecules.forEach((oneMol)=>{
       oneMol.draw();
     })
   }
@@ -57,7 +60,7 @@ class Game {
     for (let i = 0; i < qty; i++) {
       const theX = 375 + Math.floor(Math.random()*420); // between 55 * 425 -5
       const theY = 3+ this.waterLevelRight + Math.ceil(Math.random()*385); // between 50 * 445 -5 
-      this.saltMolecules.unshift( new WaterMol(theX, theY)) 
+      this.saltMolecules.unshift( new Salt(theX, theY)) 
       this.saltMolecules[0].move();
     }
   }
@@ -83,7 +86,7 @@ class Game {
 class Pores {
   constructor(){
     this.x=425;
-    this.poreWidth= 20;
+    this.poreWidth= 25;
     this.lineLength = 50;
     this.lineArray=[];
   }
@@ -92,10 +95,10 @@ class Pores {
     ctx.lineWidth = 10 ;
     ctx.lineJoin = 'round';
     ctx.beginPath();
-    for (let y=50; y<450; y=y+this.poreWidth+this.lineLength) {
+    for (let y=450; y>50; y=y-this.poreWidth-this.lineLength) {
        ctx.beginPath(); 
        ctx.moveTo(this.x, y);
-       ctx.lineTo(this.x, y+this.lineLength);
+       ctx.lineTo(this.x, y-this.lineLength);
        ctx.stroke();   
        ctx.closePath()  
        this.lineArray.push({startX: this.x-5,   startY: y, height: this.lineLength, width: ctx.lineWidth})
@@ -189,18 +192,32 @@ class WaterMol {
   poreColission () { // should move to the Game
     //this.lineArray.push({startX: this.x-5,   startY: y, height: this.lineLength, width: ctx.lineWidth})
     theGame.lineArray.forEach((thisLine)=> { 
-      if (this.x + this.radius >= thisLine.startX && this.y >= thisLine.startY && this.y <= thisLine.startY+thisLine.height) {     // colide from the left
-        this.vx *= -1;
+      let futureX = this.x + this.vx;
+      let xDist = Math.abs(futureX-thisLine.startX-0.5*thisLine.width);
+      // let futureDist = Math.abs(this.x += this.vx-0.5*thisLine.width);
+      if (xDist <= this.radius + 0.5*thisLine.width) {
+        if(this.y + this.radius >= thisLine.startY-thisLine.height && this.y-this.radius <= thisLine.startY) {
+          this.vx *= -1;
+          // this.vy *= -1;
+        }
       }
-      if (this.x - this.radius >= thisLine.startX + thisLine.width && this.y > thisLine.startY && this.y <= thisLine.startY+thisLine.height) {  // colide from the right
-        this.vx *= -1;
-      }
-      if (this.y - this.radius >= thisLine.startY && this.x >= thisLine.startX && this.x <= thisLine.startX+thisLine.width) {  // colide from below
-        this.vy *= -1;
-      }
-      if (this.y + this.radius >= thisLine.startY + thisLine.lineLength && this.x >= thisLine.startX && this.x <= thisLine.startX+thisLine.width) {  // colide from above
-        this.vy *= -1;
-      }
+      // let topYdist = this.y - thisLine.startY+thisLine.height;
+      // if (this.x + this.radius > thisLine.startX && this.y >= thisLine.startY-thisLine.height && this.y <= thisLine.startY) {     // colide from the left
+      //   this.vx *= -1;
+      //   // this.vy *= -1;
+      // }
+      // if (this.x - this.radius < thisLine.startX + thisLine.width && this.y >= thisLine.startY-thisLine.height && this.y <= thisLine.startY) {  // colide from the right
+      //   this.vx *= -1;
+      //   // this.vy *= -1;
+      // }
+      // if (this.y - this.radius <= thisLine.startY && this.x+ this.radius >= thisLine.startX && this.x-this.radius <= thisLine.startX+thisLine.width) {  // colide from below
+      //   this.vy *= -1;
+      //   // this.vx *= -1;
+      // }
+      // if (this.y + this.radius >= thisLine.startY + thisLine.lineLength && this.x+this.radius >= thisLine.startX && this.x- this.radius <= thisLine.startX+thisLine.width) {  // colide from above
+      //   this.vy *= -1;
+      //   // this.vx *= -1;
+      // }
     });
   }
 }
@@ -210,7 +227,7 @@ class Salt extends WaterMol{
     super(x, y)
     this.vx= 5;
     this.vy= 5;
-    this.radius= 5;
+    this.radius= 6;
     this.color= "#fc5f09";
     this.randomDirection ()
   }

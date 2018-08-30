@@ -57,6 +57,7 @@ canvas {
   /* border: 1px solid rebeccapurple; */
   margin-left: 2vw;
   margin-top: 2vh;
+  display: none;
 }
 
 .hide {
