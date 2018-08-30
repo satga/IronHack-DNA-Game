@@ -55,7 +55,6 @@ $(document).ready(function(){
         theGame.gotOneMatch(selectedEnzyme, thisBtn);
       } //else {alert('Good Job! Now pick a process to match')}
     } else {
-        theGame.updateClicks();
         if (($('#process').hasClass("blocked"))) {
           popAlert($('#popAlert'),'Try selecting a different enzyme to match your process')
           // alert('Try selecting a different enzyme to match your process!')
@@ -80,7 +79,6 @@ $(document).ready(function(){
         theGame.gotOneMatch(selectedEnzyme, thisBtn);
       } //else {alert('Good Job! Now pick an enzyme to match')}
     } else {
-        theGame.updateClicks();
         if (($('#enzymes').hasClass("blocked"))) {
           popAlert($('#popAlert'),'Try selecting a different process to match your enzyme!')
           thisBtn.removeClass("pressed");

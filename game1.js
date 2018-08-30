@@ -28,15 +28,17 @@ const ctx = canvas.getContext("2d");
 class structureGame {
   constructor(){
     this.endOptions = [
-      {position: 'vertical',   textX: 550, textY: 560, end: 5, circleX: 410, circleY:547,},
-      {position: 'vertical',   textX: 390, textY: 560, end: 3, circleX: 560, circleY:547,},
-      {position: 'vertical',   textX: 390, textY: 35,  end: 5, circleX: 560, circleY:22,},
-      {position: 'vertical',   textX: 550, textY: 35,  end: 3, circleX: 410, circleY:20,},
-      {position: 'horizontal', textX: 25,  textY: 120, end: 3, circleX: 65,  circleY:260,},
-      {position: 'horizontal', textX: 830, textY: 120, end: 5, circleX: 865, circleY:260,},
-      {position: 'horizontal', textX: 830, textY: 270, end: 3, circleX: 865, circleY:120,},
-      {position: 'horizontal', textX: 25,  textY: 270, end: 5, circleX: 65,  circleY:120,},
+      {position: 'vertical',   textX: 550, textY: 560, end: 5, circleX: 390, circleY:560,},
+      {position: 'vertical',   textX: 390, textY: 560, end: 3, circleX: 550, circleY:560,},
+      {position: 'vertical',   textX: 390, textY: 35,  end: 5, circleX: 550, circleY:35,},
+      {position: 'vertical',   textX: 550, textY: 35,  end: 3, circleX: 390, circleY:35,},
+      {position: 'horizontal', textX: 25,  textY: 120, end: 3, circleX: 25,  circleY:260,},
+      {position: 'horizontal', textX: 830, textY: 120, end: 5, circleX: 830, circleY:270,},
+      {position: 'horizontal', textX: 830, textY: 270, end: 3, circleX: 830, circleY:120,},
+      {position: 'horizontal', textX: 25,  textY: 270, end: 5, circleX: 25,  circleY:120,},
     ];
+    this.verticalPoints = [[550,560],[390,560],[390,35],[550, 35]];
+    this.horizontalPoints = [[25,120],[25,260],[830,120],[830, 270]];
     this.setup ={};
     this.guessedEnds=0;
     this.level =1;
@@ -94,16 +96,18 @@ class structureGame {
   checkIfWon () {
     if (this.guessedEnds == 5 && this.level ==1){
       this.level=2;
+      this.guessedEnds= 0;
       $('#popUp').html("You've passed level 1");
       $('#popUp').show();
       setTimeout(function(){
         $('#popUp').hide();
         }, 2000);
-    } else if (this.guessedEnds == 5 && this.level ==2){
+    } else if (this.guessedEnds >= 5 && this.level ==2){
       $('#popUp').html("You've passed level 2");
       $('#popUp').show();
       setTimeout(function(){
         $('#popUp').hide();
+        location.reload();
         }, 2000);
     }
   };

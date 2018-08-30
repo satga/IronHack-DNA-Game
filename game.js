@@ -56,10 +56,13 @@ class Game{
     this.correctOrder =['helicase', 'primase', 'DNA polymerase 3', 'helicase', 'primase', 'DNA polymerase 3', 'DNA polymerase 1', 'ligase',];
     this.guessedSteps=0;
     this.missedClicks=0;
+    this.totalClicks=0;
     this.wrongSound = document.getElementById("wrongAnswer"); 
     this.rightSound = document.getElementById("correctAnswer"); 
   }
   checkEnzymeOrder(enzymePick) {
+    this.totalClicks++;
+    this.updateClicks();
     if (this.correctOrder[this.guessedSteps] == enzymePick ) {
       console.log('enzyme match')
       this.rightSound.play()
@@ -71,6 +74,8 @@ class Game{
   }
 
   checkProcessOrder(processPick) {
+    this.totalClicks++;
+    this.updateClicks();
     if (this.correctOrder[this.guessedSteps] == processPick) {
       this.rightSound.play()
       console.log('process match')
@@ -84,8 +89,8 @@ class Game{
   updateClicks() {
     var displayClicks = $('span');
     var maxClicks=2*this.correctOrder.length;
-    var totalClicks = this.missedClicks + this.guessedSteps*2;
-    displayClicks.html(`${totalClicks} out of ${maxClicks}`)
+    // var totalClicks = this.missedClicks + this.guessedSteps*2;
+    displayClicks.html(`${this.totalClicks} out of ${maxClicks}`)
     if (this.missedClicks > 0.3*(maxClicks)) {
       $('#clicks').removeClass("normal");
       $('#clicks').addClass("warning");
