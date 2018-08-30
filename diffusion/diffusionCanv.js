@@ -6,10 +6,12 @@ class Game {
     this.waterLevelLeft=50;
     this.waterLevelRight=50;
     this.waterMolecules = [];
+    this.saltMolecules=[];
     this.waterLevel = new Water(this.waterLevelLeft,this.waterLevelRight);
     this.spawnWaterMoleculesLeft(10)
     this.spawnWaterMoleculesRight(10)
     this.lineArray = this.pores.lineArray;
+    this.allMolecules= this.waterMolecules.concat(this.saltMolecules);
   }
 
   drawContainer (){
@@ -36,7 +38,7 @@ class Game {
   spawnWaterMoleculesLeft (qty) {
     for (let i = 0; i < qty; i++) {
       const theX = 50 + Math.floor(Math.random()*365); // between 55 * 425 -5
-      const theY = 45 + Math.floor(Math.random()*390); // between 50 * 445 -5 
+      const theY = 3+ this.waterLevelLeft + Math.ceil(Math.random()*385); // between 50 * 445 -5 
       this.waterMolecules.unshift( new WaterMol(theX, theY)) 
       this.waterMolecules[0].move();
     }
@@ -45,10 +47,36 @@ class Game {
   spawnWaterMoleculesRight (qty) {
     for (let i = 0; i < qty; i++) {
       const theX = 375 + Math.floor(Math.random()*420); // between 55 * 425 -5
-      const theY = 45 + Math.floor(Math.random()*390); // between 50 * 445 -5 
+      const theY = 3+ this.waterLevelRight + Math.ceil(Math.random()*385); // between 50 * 445 -5 
       this.waterMolecules.unshift( new WaterMol(theX, theY)) 
       this.waterMolecules[0].move();
     }
+  }
+
+  spawnSaltMoleculesRight (qty) {
+    for (let i = 0; i < qty; i++) {
+      const theX = 375 + Math.floor(Math.random()*420); // between 55 * 425 -5
+      const theY = 3+ this.waterLevelRight + Math.ceil(Math.random()*385); // between 50 * 445 -5 
+      this.saltMolecules.unshift( new WaterMol(theX, theY)) 
+      this.saltMolecules[0].move();
+    }
+  }
+
+  moleculeColission () { // should move to the Game class
+    for (let i=0; i < this.allMolecules.length-1; i++) {
+        for (let j=1; j < this.allMolecules.length; j++){
+          var xDistance = (this.allMolecules[j].x - this.allMolecules[i].x); 
+          var yDistance = (this.allMolecules[j].y - this.allMolecules[i].y);
+          var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
+          var sumOfRadius = ((this.allMolecules[i].radius) + (this.allMolecules[j].radius)); // add the balls radius together
+          if (distanceBetween < sumOfRadius) {  
+            this.allMolecules[i].vx *= -1;
+            this.allMolecules[j].vx *= -1;
+            this.allMolecules[i].vy *= -1;
+            this.allMolecules[j].vy *= -1;
+          }
+        }
+    }  
   }
 }
 
@@ -138,8 +166,8 @@ class WaterMol {
     setInterval(()=>{
       this.x += this.vx;
       this.y += this.vy;
-      if (this.x+ this.vx <425) {
-          if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelLeft+this.radius) {
+      if (this.x+ this.vx <425) { // left side
+          if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelLeft+this.radius+2) {
             this.vy *= -1;
             }
           if (this.x + this.vx < 55) {
@@ -147,47 +175,44 @@ class WaterMol {
         } 
       if (this.x + this.vx > 795) {
         this.vx *= -1;
+        if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
+          this.vy *= -1;
+        }
       }
-      if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius) {
+      if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
         this.vy *= -1;
       }
-      this.waterColission ()
+      theGame.moleculeColission ()
       this.poreColission ()
     },50)
   }
-  waterColission () { // should move to the Game class
-    for (let i=0; i < theGame.waterMolecules.length-1; i++) {
-        for (let j=1; j < theGame.waterMolecules.length; j++){
-          var xDistance = (theGame.waterMolecules[j].x - theGame.waterMolecules[i].x); 
-          var yDistance = (theGame.waterMolecules[j].y - theGame.waterMolecules[i].y);
-          var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
-          var sumOfRadius = ((theGame.waterMolecules[i].radius) + (theGame.waterMolecules[j].radius)); // add the balls radius together
-          if (distanceBetween < sumOfRadius) {
-            theGame.waterMolecules[i].vx *= -1;
-            theGame.waterMolecules[j].vx *= -1;
-            theGame.waterMolecules[i].vy *= -1;
-            theGame.waterMolecules[j].vy *= -1;
-          }
-        }
-    }  
-  }
-
-  poreColission () {
+  poreColission () { // should move to the Game
     //this.lineArray.push({startX: this.x-5,   startY: y, height: this.lineLength, width: ctx.lineWidth})
     theGame.lineArray.forEach((thisLine)=> { 
-      if (this.x + this.radius > thisLine.startX && this.y >= thisLine.startY && this.y < thisLine.startY+thisLine.height) {     // colide from the left
+      if (this.x + this.radius >= thisLine.startX && this.y >= thisLine.startY && this.y <= thisLine.startY+thisLine.height) {     // colide from the left
         this.vx *= -1;
       }
-      if (this.x - this.radius > thisLine.startX + thisLine.width && this.y >= thisLine.startY && this.y < thisLine.startY+thisLine.height) {  // colide from the right
+      if (this.x - this.radius >= thisLine.startX + thisLine.width && this.y > thisLine.startY && this.y <= thisLine.startY+thisLine.height) {  // colide from the right
         this.vx *= -1;
       }
-      // if (this.y - this.radius > thisLine.y) {  // colide from below
-      //   this.vy *= -1;
-      // }
-      // if (this.y + this.radius > thisLine.y + thisLine.lineLength) {  // colide from above
-      //   this.vy *= -1;
-      // }
+      if (this.y - this.radius >= thisLine.startY && this.x >= thisLine.startX && this.x <= thisLine.startX+thisLine.width) {  // colide from below
+        this.vy *= -1;
+      }
+      if (this.y + this.radius >= thisLine.startY + thisLine.lineLength && this.x >= thisLine.startX && this.x <= thisLine.startX+thisLine.width) {  // colide from above
+        this.vy *= -1;
+      }
     });
+  }
+}
+
+class Salt extends WaterMol{
+  constructor(x,y){
+    super(x, y)
+    this.vx= 5;
+    this.vy= 5;
+    this.radius= 5;
+    this.color= "#fc5f09";
+    this.randomDirection ()
   }
 }
 
