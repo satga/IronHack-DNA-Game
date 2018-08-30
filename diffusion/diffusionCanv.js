@@ -65,18 +65,35 @@ class Game {
     }
   }
 
-  moleculeColission () { // should move to the Game class
-    for (let i=0; i < this.allMolecules.length-1; i++) {
-        for (let j=1; j < this.allMolecules.length; j++){
-          var xDistance = (this.allMolecules[j].x - this.allMolecules[i].x); 
-          var yDistance = (this.allMolecules[j].y - this.allMolecules[i].y);
+  waterColission () { // should move to the Game class
+    for (let i=0; i < this.waterMolecules.length-1; i++) {
+        for (let j=1; j < this.waterMolecules.length; j++){
+          var xDistance = (this.waterMolecules[j].x - this.waterMolecules[i].x); 
+          var yDistance = (this.waterMolecules[j].y - this.waterMolecules[i].y);
           var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
-          var sumOfRadius = ((this.allMolecules[i].radius) + (this.allMolecules[j].radius)); // add the balls radius together
+          var sumOfRadius = ((this.waterMolecules[i].radius) + (this.waterMolecules[j].radius)); // add the balls radius together
           if (distanceBetween < sumOfRadius) {  
-            this.allMolecules[i].vx *= -1;
-            this.allMolecules[j].vx *= -1;
-            this.allMolecules[i].vy *= -1;
-            this.allMolecules[j].vy *= -1;
+            this.waterMolecules[i].vx *= -1;
+            this.waterMolecules[j].vx *= -1;
+            this.waterMolecules[i].vy *= -1;
+            this.waterMolecules[j].vy *= -1;
+          }
+        }
+    }  
+  }
+
+  saltColission () { // should move to the Game class
+    for (let i=0; i < this.saltMolecules.length-1; i++) {
+        for (let j=1; j < this.saltMolecules.length; j++){
+          var xDistance = (this.saltMolecules[j].x - this.saltMolecules[i].x); 
+          var yDistance = (this.saltMolecules[j].y - this.saltMolecules[i].y);
+          var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
+          var sumOfRadius = ((this.saltMolecules[i].radius) + (this.saltMolecules[j].radius)); // add the balls radius together
+          if (distanceBetween < sumOfRadius) {  
+            this.saltMolecules[i].vx *= -1;
+            this.saltMolecules[j].vx *= -1;
+            this.saltMolecules[i].vy *= -1;
+            this.saltMolecules[j].vy *= -1;
           }
         }
     }  
@@ -185,7 +202,7 @@ class WaterMol {
       if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
         this.vy *= -1;
       }
-      theGame.moleculeColission ()
+      theGame.waterColission ()
       this.poreColission ()
     },50)
   }
@@ -198,26 +215,8 @@ class WaterMol {
       if (xDist <= this.radius + 0.5*thisLine.width) {
         if(this.y + this.radius >= thisLine.startY-thisLine.height && this.y-this.radius <= thisLine.startY) {
           this.vx *= -1;
-          // this.vy *= -1;
         }
       }
-      // let topYdist = this.y - thisLine.startY+thisLine.height;
-      // if (this.x + this.radius > thisLine.startX && this.y >= thisLine.startY-thisLine.height && this.y <= thisLine.startY) {     // colide from the left
-      //   this.vx *= -1;
-      //   // this.vy *= -1;
-      // }
-      // if (this.x - this.radius < thisLine.startX + thisLine.width && this.y >= thisLine.startY-thisLine.height && this.y <= thisLine.startY) {  // colide from the right
-      //   this.vx *= -1;
-      //   // this.vy *= -1;
-      // }
-      // if (this.y - this.radius <= thisLine.startY && this.x+ this.radius >= thisLine.startX && this.x-this.radius <= thisLine.startX+thisLine.width) {  // colide from below
-      //   this.vy *= -1;
-      //   // this.vx *= -1;
-      // }
-      // if (this.y + this.radius >= thisLine.startY + thisLine.lineLength && this.x+this.radius >= thisLine.startX && this.x- this.radius <= thisLine.startX+thisLine.width) {  // colide from above
-      //   this.vy *= -1;
-      //   // this.vx *= -1;
-      // }
     });
   }
 }
@@ -228,8 +227,56 @@ class Salt extends WaterMol{
     this.vx= 5;
     this.vy= 5;
     this.radius= 6;
+    this.capturedWater=0;
+    this.maxWaterCapacity=4;
     this.color= "#fc5f09";
     this.randomDirection ()
+  }
+
+  waterCapture () {
+    theGame.waterMolecules.forEach((thiswater)=> {
+      var xDistance = (this.x - thiswater.x); 
+      var yDistance = (this.y - thiswater.y);
+      var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
+      var sumOfRadius = ((this.radius) + (thiswater.radius)); // add the balls radius together
+      if (distanceBetween < sumOfRadius) {
+        if (this.capturedWater < this.maxWaterCapacity) {  
+          thiswater.vx = this.vx;
+          thiswater.vy = this.vy;
+        } else  {
+        thiswater.vx *= -1;
+        this.vx *= -1;
+        thiswater.vy *= -1;
+        this.vy *= -1;
+        }
+      }
+    });
+  }
+
+  move () {
+    setInterval(()=>{
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x+ this.vx <425) { // left side
+          if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelLeft+this.radius+2) {
+            this.vy *= -1;
+            }
+          if (this.x + this.vx < 55) {
+            this.vx *= -1;} 
+        } 
+      if (this.x + this.vx > 795) {
+        this.vx *= -1;
+        if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
+          this.vy *= -1;
+        }
+      }
+      if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
+        this.vy *= -1;
+      }
+      theGame.saltColission ()
+      this.poreColission ()
+      this.waterCapture();
+    },50)
   }
 }
 
