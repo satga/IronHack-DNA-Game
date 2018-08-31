@@ -90,7 +90,7 @@ class Game {
           var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
           var sumOfRadius = ((this.saltMolecules[i].radius) + (this.saltMolecules[j].radius)); // add the balls radius together
           if (distanceBetween < sumOfRadius) {  
-            this.saltMolecules[i].vx *= -1;
+            this.saltMolecules[i].vx *= -1; 
             this.saltMolecules[j].vx *= -1;
             this.saltMolecules[i].vy *= -1;
             this.saltMolecules[j].vy *= -1;
@@ -158,7 +158,7 @@ class WaterMol {
   constructor(x,y){
     this.x= x;
     this.y= y;
-    this.vx= 6;
+    this.vx= 7;
     this.vy= 6;
     this.radius= 5;
     this.color= 'blue';
@@ -235,18 +235,24 @@ class Salt extends WaterMol{
       var yDistance = (this.y - thisWater.y);
       var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
       var sumOfRadius = ((this.radius) + (thisWater.radius)); // add the balls radius together
-      if (distanceBetween <= sumOfRadius && this.capturedWater.length <= this.maxWaterCapacity) {
+      if (distanceBetween <= sumOfRadius && !this.capturedWater.includes(thisWater)) {
+        if (this.capturedWater.length <= this.maxWaterCapacity) {
         thisWater.vx = this.vx;
         thisWater.vy = this.vy;
         this.capturedWater.push(thisWater);    
-        console.log("captured")        
-      } else if (distanceBetween <= sumOfRadius && !this.capturedWater.includes(thisWater)){
+        console.log("captured") 
+      } else {
           thisWater.vx *= -1;
           this.vx *= -1;
           thisWater.vy *= -1;
           this.vy *= -1;
           console.log("direction")
+          this.capturedWater.forEach((oneWater)=> {
+            oneWater.vx *= -1;
+            oneWater.vy *= -1;
+          });
         }
+      }
     });
     this.capturedWater.forEach((oneWater,index)=> {
       var xDistance = (this.x - oneWater.x); 
