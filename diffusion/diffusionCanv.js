@@ -8,8 +8,8 @@ class Game {
     this.waterMolecules = [];
     this.saltMolecules=[];
     this.waterLevel = new Water(this.waterLevelLeft,this.waterLevelRight);
-    this.spawnWaterMoleculesLeft(12)
-    this.spawnWaterMoleculesRight(12)
+    this.spawnWaterMoleculesLeft(15)
+    this.spawnWaterMoleculesRight(15)
     this.lineArray = this.pores.lineArray;
     this.allMolecules= this.waterMolecules.concat(this.saltMolecules);
   }
@@ -40,7 +40,7 @@ class Game {
 
   spawnWaterMoleculesLeft (qty) {
     for (let i = 0; i < qty; i++) {
-      const theX = 50 + Math.floor(Math.random()*365); // between 55 * 425 -5
+      const theX = 55 + Math.floor(Math.random()*355); // between 55 * 425 -5
       const theY = 3+ this.waterLevelLeft + Math.ceil(Math.random()*385); // between 50 * 445 -5 
       this.waterMolecules.unshift( new WaterMol(theX, theY)) 
       this.waterMolecules[0].move();
@@ -49,7 +49,7 @@ class Game {
 
   spawnWaterMoleculesRight (qty) {
     for (let i = 0; i < qty; i++) {
-      const theX = 375 + Math.floor(Math.random()*420); // between 55 * 425 -5
+      const theX = 425 + Math.floor(Math.random()*370); // between 55 * 425 -5
       const theY = 3+ this.waterLevelRight + Math.ceil(Math.random()*385); // between 50 * 445 -5 
       this.waterMolecules.unshift( new WaterMol(theX, theY)) 
       this.waterMolecules[0].move();
@@ -165,14 +165,10 @@ class WaterMol {
     this.randomDirection ()
   }
   randomDirection () {
-    let angle = Math.random(0, 2*Math.PI);
+    let angle = Math.random()*2*Math.PI;
     let direction = [Math.cos(angle), Math.sin(angle)];
-    let a= -1;
-    if (Math.random < 0.5) {a   = 1}
-    this.vx= a*this.vx * direction[0];
-    let b= -1;
-    if (Math.random < 0.5) {b   = 1}
-    this.vy= b*this.vy * direction[1];
+    this.vx= this.vx * direction[0];
+    this.vy= this.vy * direction[1];
   }
   draw() {
     ctx.beginPath();
