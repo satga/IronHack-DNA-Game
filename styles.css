@@ -138,11 +138,14 @@ header {
   border: none;
   background-color: #007bff;
   color: white;
-  margin-left: 40vw;
+  margin-left: 20vw;
   margin-top: 5vh;
 }
 
-
+#instructions-g1 {
+  margin-left: 20vw;
+  margin-top: 5vh;
+}
 /* canvas {
   border: 1px solid rebeccapurple;
   margin-left: 2vw;
