@@ -119,7 +119,7 @@ header {
   background-repeat:no-repeat;
   background-size:cover;
   background-position: center;
-  color: white
+  color: white;
  }
 
  .instructions h2 {
@@ -141,6 +141,7 @@ header {
   margin-left: 40vw;
   margin-top: 5vh;
 }
+
 
 /* canvas {
   border: 1px solid rebeccapurple;
@@ -196,4 +197,13 @@ header {
   border: none;
   background-color: #007bff;
   color: white;
+}
+
+.BackHome {
+  border: 3px solid white;
+  color: white;
+  padding: 2vh;
+  /* margin: 2vh; */
+  border-radius: 50%;
+  margin-bottom: 3vh;
 }
