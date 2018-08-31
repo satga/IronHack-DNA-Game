@@ -73,3 +73,12 @@ canvas {
   margin-top: 10vh;
   display: none;
 }
+
+.BackHome {
+  border: 3px solid white;
+  color: white;
+  padding: 2vh;
+  /* margin: 2vh; */
+  border-radius: 50%;
+  margin-bottom: 3vh;
+}
