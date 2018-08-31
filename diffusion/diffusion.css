@@ -44,7 +44,7 @@ header {
   border-radius: 4px; 
 }
 
-#playGame {
+#playGame{
   box-shadow: none;
   border: none;
   background-color: #fc5f09;
@@ -61,5 +61,15 @@ canvas {
 }
 
 .hide {
+  display: none;
+}
+
+#addSolutes {
+  box-shadow: none;
+  border: none;
+  background-color: #fc5f09;
+  color: white;
+  margin-left: 2vw;
+  margin-top: 10vh;
   display: none;
 }

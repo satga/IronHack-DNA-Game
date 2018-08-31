@@ -58,7 +58,7 @@ class Game {
 
   spawnSaltMoleculesRight (qty) {
     for (let i = 0; i < qty; i++) {
-      const theX = 375 + Math.floor(Math.random()*420); // between 55 * 425 -5
+      const theX = 425 + Math.floor(Math.random()*370); // between 425 * 795
       const theY = 3+ this.waterLevelRight + Math.ceil(Math.random()*385); // between 50 * 445 -5 
       this.saltMolecules.unshift( new Salt(theX, theY)) 
       this.saltMolecules[0].move();
@@ -103,8 +103,8 @@ class Game {
 class Pores {
   constructor(){
     this.x=425;
-    this.poreWidth= 25;
-    this.lineLength = 50;
+    this.poreWidth= 20;
+    this.lineLength = 20;
     this.lineArray=[];
   }
 
@@ -158,8 +158,8 @@ class WaterMol {
   constructor(x,y){
     this.x= x;
     this.y= y;
-    this.vx= 5;
-    this.vy= 5;
+    this.vx= 6;
+    this.vy= 6;
     this.radius= 5;
     this.color= 'blue';
     this.randomDirection ()
@@ -187,19 +187,19 @@ class WaterMol {
       this.x += this.vx;
       this.y += this.vy;
       if (this.x+ this.vx <425) { // left side
-          if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelLeft+this.radius+2) {
+          if (this.y + this.vy >= 445-this.radius || this.y + this.vy <= theGame.waterLevelLeft+this.radius+2) {
             this.vy *= -1;
             }
           if (this.x + this.vx < 55) {
             this.vx *= -1;} 
         } 
-      if (this.x + this.vx > 795) {
+      if (this.x + this.vx >= 795-this.radius) {
         this.vx *= -1;
-        if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
+        if (this.y + this.vy >= 445-this.radius || this.y + this.vy <= theGame.waterLevelRight+this.radius+2) {
           this.vy *= -1;
         }
       }
-      if (this.y + this.vy > 445 || this.y + this.vy < theGame.waterLevelRight+this.radius+2) {
+      if (this.y + this.vy >= 445-this.radius || this.y + this.vy <= theGame.waterLevelRight+this.radius+2) {
         this.vy *= -1;
       }
       theGame.waterColission ()
@@ -226,8 +226,8 @@ class Salt extends WaterMol{
     super(x, y)
     this.vx= 5;
     this.vy= 5;
-    this.radius= 6;
-    this.capturedWater=0;
+    this.radius= 10;
+    this.capturedWater=[];
     this.maxWaterCapacity=4;
     this.color= "#fc5f09";
     this.randomDirection ()
@@ -239,16 +239,15 @@ class Salt extends WaterMol{
       var yDistance = (this.y - thiswater.y);
       var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
       var sumOfRadius = ((this.radius) + (thiswater.radius)); // add the balls radius together
-      if (distanceBetween < sumOfRadius) {
-        if (this.capturedWater < this.maxWaterCapacity) {  
-          thiswater.vx = this.vx;
-          thiswater.vy = this.vy;
-        } else  {
+      if (distanceBetween < sumOfRadius && this.capturedWater.length < this.maxWaterCapacity) {
+        thiswater.vx = this.vx;
+        thiswater.vy = this.vy;
+        // this.capturedWater.push(thiswater);
+      } else if (distanceBetween < sumOfRadius) {
         thiswater.vx *= -1;
         this.vx *= -1;
         thiswater.vy *= -1;
         this.vy *= -1;
-        }
       }
     });
   }

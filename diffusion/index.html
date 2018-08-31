@@ -18,9 +18,19 @@
           <li>Adjust the size of the pores, or add more solutes to keep your water levels equal</li>
       <button class="btn active" id="playGame">Click to Play</button>
     </main>
-    <canvas id="canv" height="500px" width="850px"> </canvas>
+    <div class="container-fluid game">
+        <div class="row">
+            <div class="col-9">
+                <canvas id="canv" height="500px" width="850px"> </canvas>
+            </div>
+            <div class="col-3">
+                <button class="btn active" id="addSolutes">Add solutes to the right side</button>
+                <p id="score">Keep your water levels equal</p>
+            </div>
+        </div> 
+    </div> 
     <p class="info hide" id="popUp">Adjust the size of the pores, or add more solutes to keep your water levels equal</p>
-    <p id="score">Keep your water levels equal</p>
+
     <!-- <audio id="wrongAnswer">
         <source src="audio/Cartoon_Boing.m4a" type="audio/mpeg">
     <audio id="correctAnswer">

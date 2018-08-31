@@ -181,3 +181,19 @@ header {
   border: 1px solid #1e7e34;
   border-radius: 4px; 
 }
+
+.service-box {
+  padding: 5vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: baseline;
+  text-align: center;
+}
+
+.theBtn {
+  box-shadow: none;
+  border: none;
+  background-color: #007bff;
+  color: white;
+}
