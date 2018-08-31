@@ -230,20 +230,32 @@ class Salt extends WaterMol{
   }
 
   waterCapture () {
-    theGame.waterMolecules.forEach((thiswater)=> {
-      var xDistance = (this.x - thiswater.x); 
-      var yDistance = (this.y - thiswater.y);
+    theGame.waterMolecules.forEach((thisWater)=> {
+      var xDistance = (this.x - thisWater.x); 
+      var yDistance = (this.y - thisWater.y);
       var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
-      var sumOfRadius = ((this.radius) + (thiswater.radius)); // add the balls radius together
-      if (distanceBetween < sumOfRadius && this.capturedWater.length < this.maxWaterCapacity) {
-        thiswater.vx = this.vx;
-        thiswater.vy = this.vy;
-        // this.capturedWater.push(thiswater);
-      } else if (distanceBetween < sumOfRadius) {
-        thiswater.vx *= -1;
-        this.vx *= -1;
-        thiswater.vy *= -1;
-        this.vy *= -1;
+      var sumOfRadius = ((this.radius) + (thisWater.radius)); // add the balls radius together
+      if (distanceBetween <= sumOfRadius && this.capturedWater.length <= this.maxWaterCapacity) {
+        thisWater.vx = this.vx;
+        thisWater.vy = this.vy;
+        this.capturedWater.push(thisWater);    
+        console.log("captured")        
+      } else if (distanceBetween <= sumOfRadius && !this.capturedWater.includes(thisWater)){
+          thisWater.vx *= -1;
+          this.vx *= -1;
+          thisWater.vy *= -1;
+          this.vy *= -1;
+          console.log("direction")
+        }
+    });
+    this.capturedWater.forEach((oneWater,index)=> {
+      var xDistance = (this.x - oneWater.x); 
+      var yDistance = (this.y - oneWater.y);
+      var distanceBetween = Math.sqrt((xDistance * xDistance) + (yDistance *yDistance)); 
+      var sumOfRadius = ((this.radius) + (oneWater.radius));  
+      if (distanceBetween*1.1 > sumOfRadius) {
+        this.capturedWater.slice(index,1);
+        console.log('water removed')
       }
     });
   }
